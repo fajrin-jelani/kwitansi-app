@@ -109,12 +109,12 @@
   <script>
     // Default configuration
     const defaultConfig = {
-      kwitansi_title: 'Kwitansi Pembayaran Sewa Petak',
-      company_name: 'Fadjrin',
-      company_address: 'Pasar Komura, Mangkupalas',
-      signature_location: 'Samarinda Seberang',
-      signature_name: 'Fadjrin',
-      signature_phone: '082351123433',
+      kwitansi_title: 'Kwitansi Pembayaran',
+      company_name: 'PT. MAJU BERSAMA',
+      company_address: 'Jl. Raya Utama No. 123, Jakarta',
+      signature_location: 'Jakarta',
+      signature_name: 'Penerima',
+      signature_phone: '081234567890',
       primary_color: '#2d2520',
       secondary_color: '#fffdf9',
       text_color: '#4a3f35',
@@ -122,7 +122,30 @@
       border_color: '#d4c4b0'
     };
 
-    let config = { ...defaultConfig };
+    // Load saved config from localStorage or use default
+    function loadSavedConfig() {
+      try {
+        const saved = localStorage.getItem('kwitansi_config');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return { ...defaultConfig, ...parsed };
+        }
+      } catch (e) {
+        console.error('Error loading config:', e);
+      }
+      return { ...defaultConfig };
+    }
+
+    // Save config to localStorage
+    function saveConfigToStorage(configToSave) {
+      try {
+        localStorage.setItem('kwitansi_config', JSON.stringify(configToSave));
+      } catch (e) {
+        console.error('Error saving config:', e);
+      }
+    }
+
+    let config = loadSavedConfig();
     let receipts = [];
     let currentRecordCount = 0;
     let isSelectMode = false;
@@ -943,14 +966,19 @@
       const newSignatureName = document.getElementById('settings-signature-name').value.trim();
       const newSignaturePhone = document.getElementById('settings-signature-phone').value.trim();
       
-      await window.elementSdk.setConfig({
+      const newConfig = {
         kwitansi_title: newTitle || defaultConfig.kwitansi_title,
         company_name: newCompany || defaultConfig.company_name,
         company_address: newAddress || defaultConfig.company_address,
         signature_location: newLocation || defaultConfig.signature_location,
         signature_name: newSignatureName || defaultConfig.signature_name,
         signature_phone: newSignaturePhone
-      });
+      };
+      
+      // Save to localStorage
+      saveConfigToStorage(newConfig);
+      
+      await window.elementSdk.setConfig(newConfig);
       
       toggleSettings();
       showToast('Pengaturan berhasil disimpan! ✨');
@@ -1011,6 +1039,9 @@
     async function onConfigChange(newConfig) {
       config = { ...defaultConfig, ...newConfig };
       
+      // Save to localStorage whenever config changes
+      saveConfigToStorage(config);
+      
       // Update title
       const titleText = document.getElementById('title-text');
       if (titleText) {
@@ -1026,10 +1057,24 @@
         }
       });
     }
+    
+    // Initialize display with saved config
+    function initializeDisplay() {
+      // Update title on page load
+      const titleText = document.getElementById('title-text');
+      if (titleText) {
+        titleText.textContent = config.kwitansi_title || defaultConfig.kwitansi_title;
+      }
+    }
+    
+    // Call initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      initializeDisplay();
+    });
 
-    // Element SDK initialization
+    // Element SDK initialization with saved config
     window.elementSdk.init({
-      defaultConfig,
+      defaultConfig: config, // Use loaded config instead of defaultConfig
       onConfigChange,
       mapToCapabilities: (cfg) => ({
         recolorables: [],
@@ -1050,5 +1095,5 @@
     // Initialize Data SDK
     window.dataSdk.init(dataHandler);
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5e0884b604b5ab',t:'MTc2OTc0NTMyMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5e2db9b54d959b',t:'MTc2OTc0Njg0Ni4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
