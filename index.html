@@ -1,0 +1,1054 @@
+<!doctype html>
+<html lang="id" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kwitansi Pembayaran</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="/_sdk/element_sdk.js"></script>
+  <script src="/_sdk/data_sdk.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@400;600;700&amp;family=DM+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+  <style>
+    body {
+      box-sizing: border-box;
+    }
+    .font-heading {
+      font-family: 'Crimson Pro', Georgia, serif;
+    }
+    .font-body {
+      font-family: 'DM Sans', system-ui, sans-serif;
+    }
+    @media print {
+      .no-print { display: none !important; }
+      .print-only { display: block !important; }
+    }
+    .receipt-pattern {
+      background-image: 
+        radial-gradient(circle at 20% 80%, rgba(120, 100, 80, 0.03) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(120, 100, 80, 0.03) 0%, transparent 50%);
+    }
+  </style>
+  <style>@view-transition { navigation: auto; }</style>
+ </head>
+ <body class="h-full font-body">
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #f5f0e8 0%, #e8e0d5 100%);"><!-- Main Container -->
+   <div class="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8"><!-- Header -->
+    <div class="text-center mb-6">
+     <div class="flex items-center justify-center gap-3">
+      <h1 id="main-title" class="font-heading text-3xl sm:text-4xl font-bold" style="color: #2d2520;">📝 <span id="title-text">Kwitansi Pembayaran</span></h1><button onclick="toggleSettings()" class="p-2 rounded-lg transition-all hover:scale-110" style="background: #e8e0d5; color: #6b5c4c;" title="Pengaturan"> ⚙️ </button>
+     </div>
+     <p class="mt-2 text-sm" style="color: #6b5c4c;">Buat dan kelola kwitansi pembayaran dengan mudah</p>
+    </div><!-- Settings Panel -->
+    <div id="settings-panel" class="hidden no-print rounded-2xl shadow-lg p-6 mb-6 receipt-pattern" style="background: #fffdf9; border: 1px solid #d4c4b0;">
+     <div class="flex items-center justify-between mb-4">
+      <h2 class="font-heading text-xl font-semibold" style="color: #2d2520;">⚙️ Pengaturan</h2><button onclick="toggleSettings()" class="text-xl" style="color: #6b5c4c;">✕</button>
+     </div>
+     <form id="settings-form" class="space-y-4">
+      <div><label for="settings-title" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Judul Kwitansi</label> <input type="text" id="settings-title" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Kwitansi Pembayaran">
+      </div>
+      <div><label for="settings-company" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Nama Perusahaan / PT</label> <input type="text" id="settings-company" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="PT. MAJU BERSAMA">
+      </div>
+      <div><label for="settings-address" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Alamat Perusahaan</label> <input type="text" id="settings-address" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Jl. Raya Utama No. 123, Jakarta">
+      </div>
+      <div class="pt-4 border-t-2" style="border-color: #e8e0d5;">
+       <h3 class="font-semibold mb-3 text-sm" style="color: #4a3f35;">📝 Tanda Tangan</h3>
+       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <div><label for="settings-location" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Tempat</label> <input type="text" id="settings-location" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Jakarta">
+        </div>
+        <div><label for="settings-signature-name" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Nama Penandatangan</label> <input type="text" id="settings-signature-name" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Penerima">
+        </div>
+       </div>
+       <div class="mt-4"><label for="settings-signature-phone" class="block text-sm font-medium mb-1" style="color: #4a3f35;">No. HP / Telepon</label> <input type="text" id="settings-signature-phone" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="081234567890">
+       </div>
+      </div><button type="submit" class="w-full py-3 px-6 rounded-lg font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98]" style="background: linear-gradient(135deg, #8b7355 0%, #6b5540 100%); box-shadow: 0 4px 15px rgba(107,85,64,0.3);"> 💾 Simpan Pengaturan </button>
+     </form>
+    </div><!-- Form Input -->
+    <div class="no-print rounded-2xl shadow-lg p-6 mb-6 receipt-pattern" style="background: #fffdf9; border: 1px solid #d4c4b0;">
+     <h2 class="font-heading text-xl font-semibold mb-4" style="color: #2d2520;">Buat Kwitansi Baru</h2>
+     <form id="receipt-form" class="space-y-4">
+      <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+       <div><label for="diterima-dari" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Telah Diterima Dari</label> <input type="text" id="diterima-dari" required class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Nama pembayar">
+       </div>
+       <div><label for="uang-sejumlah" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Uang Sejumlah (Rp)</label> <input type="number" id="uang-sejumlah" required min="0" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="0">
+       </div>
+      </div>
+      <div><label for="untuk-pembayaran" class="block text-sm font-medium mb-1" style="color: #4a3f35;">Untuk Pembayaran</label> <textarea id="untuk-pembayaran" required rows="2" class="w-full px-4 py-3 rounded-lg border-2 transition-all focus:outline-none resize-none" style="border-color: #d4c4b0; background: #fff;" onfocus="this.style.borderColor='#8b7355'; this.style.boxShadow='0 0 0 3px rgba(139,115,85,0.1)'" onblur="this.style.borderColor='#d4c4b0'; this.style.boxShadow='none'" placeholder="Keterangan pembayaran"></textarea>
+      </div><button type="submit" id="submit-btn" class="w-full py-3 px-6 rounded-lg font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98]" style="background: linear-gradient(135deg, #8b7355 0%, #6b5540 100%); box-shadow: 0 4px 15px rgba(107,85,64,0.3);"> <span id="btn-text">✨ Buat Kwitansi</span> <span id="btn-loading" class="hidden">⏳ Menyimpan...</span> </button>
+     </form>
+     <div id="limit-warning" class="hidden mt-4 p-3 rounded-lg text-center" style="background: #fff3cd; color: #856404; border: 1px solid #ffeeba;">
+      ⚠️ Batas maksimum 999 kwitansi telah tercapai. Hapus beberapa kwitansi untuk membuat yang baru.
+     </div>
+    </div><!-- Receipt List -->
+    <div class="no-print">
+     <div class="flex items-center justify-between mb-4">
+      <h2 class="font-heading text-xl font-semibold" style="color: #2d2520;">📋 Daftar Kwitansi</h2>
+      <div class="flex items-center gap-3"><button id="select-mode-btn" onclick="toggleSelectMode()" class="hidden px-4 py-2 rounded-lg font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: #e8e0d5; color: #6b5c4c;"> ☑️ Pilih Kwitansi </button> <button id="print-all-btn" onclick="printAllReceipts()" class="hidden px-4 py-2 rounded-lg font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #8b7355 0%, #6b5540 100%); box-shadow: 0 2px 10px rgba(107,85,64,0.3);"> 🖨️ Cetak Semua </button> <span id="receipt-count" class="text-sm px-3 py-1 rounded-full" style="background: #e8e0d5; color: #6b5c4c;">0 kwitansi</span>
+      </div>
+     </div><!-- Selection Mode Actions -->
+     <div id="selection-actions" class="hidden mb-4 p-4 rounded-xl" style="background: #fffdf9; border: 2px solid #8b7355;">
+      <div class="flex items-center justify-between">
+       <div class="flex items-center gap-3"><span class="font-medium" style="color: #2d2520;"> <span id="selected-count">0</span> kwitansi dipilih </span> <button onclick="selectAllReceipts()" class="px-3 py-1 text-sm rounded-lg transition-all" style="background: #e8e0d5; color: #6b5c4c;"> Pilih Semua </button> <button onclick="deselectAllReceipts()" class="px-3 py-1 text-sm rounded-lg transition-all" style="background: #e8e0d5; color: #6b5c4c;"> Batal Pilih </button>
+       </div>
+       <div class="flex items-center gap-2"><button onclick="printSelectedReceipts()" id="print-selected-btn" class="px-4 py-2 rounded-lg font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #8b7355 0%, #6b5540 100%); box-shadow: 0 2px 10px rgba(107,85,64,0.3);"> 🖨️ Cetak Terpilih </button> <button onclick="toggleSelectMode()" class="px-4 py-2 rounded-lg font-medium transition-all" style="background: #ffe5e5; color: #d63031;"> ✕ Tutup </button>
+       </div>
+      </div>
+     </div>
+     <div id="receipt-list" class="space-y-4">
+      <div id="empty-state" class="text-center py-12 rounded-2xl" style="background: #fffdf9; border: 2px dashed #d4c4b0;">
+       <div class="text-5xl mb-3">
+        📭
+       </div>
+       <p style="color: #6b5c4c;">Belum ada kwitansi. Buat kwitansi pertama Anda!</p>
+      </div>
+     </div>
+    </div><!-- Print Preview (Hidden by default) -->
+    <div id="print-preview" class="hidden print-only">
+    </div>
+   </div>
+  </div>
+  <script>
+    // Default configuration
+    const defaultConfig = {
+      kwitansi_title: 'Kwitansi Pembayaran',
+      company_name: 'PT. MAJU BERSAMA',
+      company_address: 'Jl. Raya Utama No. 123, Jakarta',
+      signature_location: 'Jakarta',
+      signature_name: 'Penerima',
+      signature_phone: '',
+      primary_color: '#2d2520',
+      secondary_color: '#fffdf9',
+      text_color: '#4a3f35',
+      accent_color: '#8b7355',
+      border_color: '#d4c4b0'
+    };
+
+    let config = { ...defaultConfig };
+    let receipts = [];
+    let currentRecordCount = 0;
+    let isSelectMode = false;
+
+    // Toggle select mode
+    function toggleSelectMode() {
+      isSelectMode = !isSelectMode;
+      const checkboxes = document.querySelectorAll('.receipt-checkbox');
+      const actionButtons = document.querySelectorAll('.action-buttons');
+      const selectionActions = document.getElementById('selection-actions');
+      const selectModeBtn = document.getElementById('select-mode-btn');
+      const printAllBtn = document.getElementById('print-all-btn');
+      
+      if (isSelectMode) {
+        // Show checkboxes, hide action buttons
+        checkboxes.forEach(cb => cb.classList.remove('hidden'));
+        actionButtons.forEach(ab => ab.classList.add('hidden'));
+        selectionActions.classList.remove('hidden');
+        selectModeBtn.style.background = '#8b7355';
+        selectModeBtn.style.color = '#fff';
+        printAllBtn.classList.add('hidden');
+      } else {
+        // Hide checkboxes, show action buttons
+        checkboxes.forEach(cb => {
+          cb.classList.add('hidden');
+          cb.checked = false;
+        });
+        actionButtons.forEach(ab => ab.classList.remove('hidden'));
+        selectionActions.classList.add('hidden');
+        selectModeBtn.style.background = '#e8e0d5';
+        selectModeBtn.style.color = '#6b5c4c';
+        printAllBtn.classList.remove('hidden');
+        updateSelectedCount();
+      }
+    }
+
+    // Update selected count
+    function updateSelectedCount() {
+      const checkboxes = document.querySelectorAll('.receipt-checkbox:checked');
+      const countSpan = document.getElementById('selected-count');
+      countSpan.textContent = checkboxes.length;
+    }
+
+    // Select all receipts
+    function selectAllReceipts() {
+      const checkboxes = document.querySelectorAll('.receipt-checkbox');
+      checkboxes.forEach(cb => cb.checked = true);
+      updateSelectedCount();
+    }
+
+    // Deselect all receipts
+    function deselectAllReceipts() {
+      const checkboxes = document.querySelectorAll('.receipt-checkbox');
+      checkboxes.forEach(cb => cb.checked = false);
+      updateSelectedCount();
+    }
+
+    // Print selected receipts
+    function printSelectedReceipts() {
+      const selectedCheckboxes = document.querySelectorAll('.receipt-checkbox:checked');
+      
+      if (selectedCheckboxes.length === 0) {
+        showToast('Pilih minimal satu kwitansi untuk dicetak', 'error');
+        return;
+      }
+      
+      const selectedIds = Array.from(selectedCheckboxes).map(cb => cb.dataset.id);
+      const selectedReceipts = receipts.filter(r => selectedIds.includes(r.__backendId));
+      
+      if (selectedReceipts.length === 0) return;
+      
+      const companyName = config.company_name || defaultConfig.company_name;
+      const companyAddress = config.company_address || defaultConfig.company_address;
+      const signatureLocation = config.signature_location || defaultConfig.signature_location;
+      const signatureName = config.signature_name || defaultConfig.signature_name;
+      const signaturePhone = config.signature_phone || defaultConfig.signature_phone;
+      
+      // Generate selected receipts HTML
+      const receiptsHTML = selectedReceipts.map(receipt => `
+          <div class="receipt">
+            <div class="header">
+              <h1>${companyName}</h1>
+              <p>${companyAddress}</p>
+            </div>
+            <div class="no-seri">No: ${String(receipt.no_seri).padStart(4, '0')}</div>
+            <div class="title">KWITANSI</div>
+            <div class="content">
+              <div class="row">
+                <span class="label">Telah diterima dari</span>
+                <span class="value">${receipt.diterima_dari}</span>
+              </div>
+              <div class="row">
+                <span class="label">Uang sejumlah</span>
+                <span class="value">${formatCurrency(receipt.uang_sejumlah)}</span>
+              </div>
+              <div class="terbilang"># ${receipt.terbilang} Rupiah #</div>
+              <div class="row">
+                <span class="label">Untuk pembayaran</span>
+                <span class="value">${receipt.untuk_pembayaran}</span>
+              </div>
+            </div>
+            <div style="text-align: right; margin-top: 8px; font-size: 13px;">
+              ${signatureLocation}, ${formatDate(receipt.tanggal)}
+            </div>
+            <div class="footer">
+              <div class="signature">
+                <div class="signature-line"></div>
+                <span style="font-size: 14px;">${signatureName}</span>
+                ${signaturePhone ? `<div style="font-size: 12px; color: #666; margin-top: 2px;">${signaturePhone}</div>` : ''}
+              </div>
+            </div>
+          </div>
+      `).join('');
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Kwitansi Terpilih (${selectedReceipts.length} kwitansi)</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Times New Roman', serif; padding: 10px; max-width: 210mm; margin: 0 auto; background: #f5f5f0; }
+            .receipt { 
+              border: 2px solid #2c5f2d; 
+              padding: 12px 16px; 
+              width: 100%; 
+              display: block; 
+              margin-bottom: 10px; 
+              box-sizing: border-box;
+              background: linear-gradient(135deg, #fef8e7 0%, #fefcf3 50%, #fef8e7 100%);
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .header { 
+              text-align: center; 
+              border-bottom: 2px solid #2c5f2d; 
+              padding-bottom: 6px; 
+              margin-bottom: 8px;
+              background: linear-gradient(to bottom, #e8f5e9 0%, transparent 100%);
+              padding-top: 4px;
+            }
+            .header h1 { font-size: 16px; margin-bottom: 3px; font-weight: bold; color: #1b4332; }
+            .header p { font-size: 14px; color: #2c5f2d; }
+            .title { 
+              text-align: center; 
+              font-size: 20px; 
+              font-weight: bold; 
+              margin: 8px 0; 
+              text-decoration: underline; 
+              color: #1b4332;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            }
+            .no-seri { 
+              text-align: right; 
+              font-size: 13px; 
+              margin-bottom: 8px; 
+              color: #d32f2f; 
+              font-weight: bold;
+            }
+            .content { margin: 8px 0; }
+            .row { display: flex; margin: 5px 0; font-size: 14px; }
+            .label { width: 110px; font-weight: bold; color: #1b4332; }
+            .value { 
+              flex: 1; 
+              border-bottom: 1px dotted #2c5f2d; 
+              padding-left: 5px; 
+              font-size: 14px; 
+              color: #000;
+            }
+            .terbilang { 
+              background: linear-gradient(to right, #c8e6c9 0%, #e8f5e9 50%, #c8e6c9 100%); 
+              padding: 6px; 
+              margin: 8px 0; 
+              font-style: italic; 
+              text-align: center; 
+              font-size: 13px;
+              border: 1px dashed #2c5f2d;
+              color: #1b4332;
+              font-weight: 500;
+            }
+            .footer { display: flex; justify-content: flex-end; margin-top: 16px; font-size: 14px; }
+            .signature { text-align: center; width: 120px; }
+            .signature-line { 
+              border-bottom: 1px solid #1b4332; 
+              height: 40px; 
+              margin-bottom: 3px; 
+            }
+            .print-btn { 
+              position: fixed; 
+              top: 20px; 
+              right: 20px; 
+              padding: 12px 24px; 
+              background: #2c5f2d; 
+              color: white; 
+              border: none; 
+              border-radius: 8px; 
+              font-size: 16px; 
+              cursor: pointer; 
+              box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+              z-index: 1000;
+            }
+            .print-btn:hover { background: #1b4332; }
+            .print-btn:active { transform: scale(0.95); }
+            @media print {
+              .receipt { page-break-after: always; }
+              .receipt:last-child { page-break-after: auto; }
+              .print-btn { display: none; }
+              @page { size: A4; margin: 10mm; }
+              body { background: white; }
+            }
+          </style>
+        </head>
+        <body>
+          <button class="print-btn" id="printBtn">🖨️ Cetak ${selectedReceipts.length} Kwitansi</button>
+          ${receiptsHTML}
+          <script>
+            window.onload = function() {
+              var btn = document.getElementById('printBtn');
+              if (btn) {
+                btn.onclick = function(e) {
+                  e.preventDefault();
+                  window.print();
+                  return false;
+                };
+              }
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    // Toggle settings panel
+    function toggleSettings() {
+      const panel = document.getElementById('settings-panel');
+      const isHidden = panel.classList.contains('hidden');
+      
+      if (isHidden) {
+        // Load current values
+        document.getElementById('settings-title').value = config.kwitansi_title || defaultConfig.kwitansi_title;
+        document.getElementById('settings-company').value = config.company_name || defaultConfig.company_name;
+        document.getElementById('settings-address').value = config.company_address || defaultConfig.company_address;
+        document.getElementById('settings-location').value = config.signature_location || defaultConfig.signature_location;
+        document.getElementById('settings-signature-name').value = config.signature_name || defaultConfig.signature_name;
+        document.getElementById('settings-signature-phone').value = config.signature_phone || defaultConfig.signature_phone;
+        panel.classList.remove('hidden');
+      } else {
+        panel.classList.add('hidden');
+      }
+    }
+
+    // Convert number to Indonesian words
+    function terbilang(angka) {
+      const bilangan = ['', 'Satu', 'Dua', 'Tiga', 'Empat', 'Lima', 'Enam', 'Tujuh', 'Delapan', 'Sembilan', 'Sepuluh', 'Sebelas'];
+      
+      if (angka < 12) {
+        return bilangan[angka];
+      } else if (angka < 20) {
+        return bilangan[angka - 10] + ' Belas';
+      } else if (angka < 100) {
+        return bilangan[Math.floor(angka / 10)] + ' Puluh ' + bilangan[angka % 10];
+      } else if (angka < 200) {
+        return 'Seratus ' + terbilang(angka - 100);
+      } else if (angka < 1000) {
+        return bilangan[Math.floor(angka / 100)] + ' Ratus ' + terbilang(angka % 100);
+      } else if (angka < 2000) {
+        return 'Seribu ' + terbilang(angka - 1000);
+      } else if (angka < 1000000) {
+        return terbilang(Math.floor(angka / 1000)) + ' Ribu ' + terbilang(angka % 1000);
+      } else if (angka < 1000000000) {
+        return terbilang(Math.floor(angka / 1000000)) + ' Juta ' + terbilang(angka % 1000000);
+      } else if (angka < 1000000000000) {
+        return terbilang(Math.floor(angka / 1000000000)) + ' Miliar ' + terbilang(angka % 1000000000);
+      }
+      return angka.toString();
+    }
+
+    // Format currency
+    function formatCurrency(amount) {
+      return new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0 }).format(amount);
+    }
+
+    // Format date
+    function formatDate(dateStr) {
+      const date = new Date(dateStr);
+      return date.toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
+    }
+
+    // Get next serial number
+    function getNextSerialNumber() {
+      if (receipts.length === 0) return 1;
+      const maxNo = Math.max(...receipts.map(r => r.no_seri || 0));
+      return maxNo + 1;
+    }
+
+    // Render receipt card
+    function createReceiptCard(receipt) {
+      const card = document.createElement('div');
+      card.className = 'rounded-2xl shadow-lg overflow-hidden receipt-pattern';
+      card.style.cssText = 'background: #fffdf9; border: 1px solid #d4c4b0;';
+      card.dataset.id = receipt.__backendId;
+      
+      card.innerHTML = `
+        <div class="p-5">
+          <div class="flex items-start justify-between mb-4">
+            <div class="flex items-start gap-3">
+              <input type="checkbox" 
+                class="receipt-checkbox hidden w-5 h-5 mt-1 rounded cursor-pointer" 
+                data-id="${receipt.__backendId}"
+                onchange="updateSelectedCount()"
+                style="accent-color: #8b7355;">
+              <div>
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl font-heading font-bold" style="color: #2d2520;">No. ${String(receipt.no_seri).padStart(4, '0')}</span>
+                  <span class="px-2 py-1 text-xs rounded-full" style="background: #e8e0d5; color: #6b5c4c;">${formatDate(receipt.tanggal)}</span>
+                </div>
+                <p class="text-sm mt-1" style="color: #6b5c4c;">${config.company_name || defaultConfig.company_name}</p>
+              </div>
+            </div>
+            <div class="flex gap-2 action-buttons">
+              <button onclick="printReceipt('${receipt.__backendId}')" class="p-2 rounded-lg transition-all hover:scale-110" style="background: #e8e0d5; color: #6b5c4c;" title="Cetak">
+                🖨️
+              </button>
+              <button onclick="confirmDelete('${receipt.__backendId}')" class="delete-btn p-2 rounded-lg transition-all hover:scale-110" style="background: #ffe5e5; color: #d63031;" title="Hapus">
+                🗑️
+              </button>
+            </div>
+          </div>
+          
+          <div class="space-y-3 text-sm">
+            <div class="flex">
+              <span class="w-32 font-medium" style="color: #6b5c4c;">Diterima dari</span>
+              <span class="flex-1 font-semibold" style="color: #2d2520;">: ${receipt.diterima_dari}</span>
+            </div>
+            <div class="flex">
+              <span class="w-32 font-medium" style="color: #6b5c4c;">Uang sejumlah</span>
+              <span class="flex-1 font-semibold" style="color: #8b7355;">: ${formatCurrency(receipt.uang_sejumlah)}</span>
+            </div>
+            <div class="flex">
+              <span class="w-32 font-medium" style="color: #6b5c4c;">Terbilang</span>
+              <span class="flex-1 italic" style="color: #2d2520;">: ${receipt.terbilang} Rupiah</span>
+            </div>
+            <div class="flex">
+              <span class="w-32 font-medium" style="color: #6b5c4c;">Pembayaran</span>
+              <span class="flex-1" style="color: #2d2520;">: ${receipt.untuk_pembayaran}</span>
+            </div>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Update receipt list
+    function updateReceiptList(data) {
+      const listContainer = document.getElementById('receipt-list');
+      const emptyState = document.getElementById('empty-state');
+      const countBadge = document.getElementById('receipt-count');
+      const printAllBtn = document.getElementById('print-all-btn');
+      const selectModeBtn = document.getElementById('select-mode-btn');
+      
+      receipts = [...data].sort((a, b) => b.no_seri - a.no_seri);
+      currentRecordCount = receipts.length;
+      
+      countBadge.textContent = `${currentRecordCount} kwitansi`;
+      
+      // Show/hide print all button and select mode button
+      if (currentRecordCount > 0) {
+        if (!isSelectMode) {
+          printAllBtn.classList.remove('hidden');
+        }
+        selectModeBtn.classList.remove('hidden');
+      } else {
+        printAllBtn.classList.add('hidden');
+        selectModeBtn.classList.add('hidden');
+      }
+      
+      // Check limit
+      const limitWarning = document.getElementById('limit-warning');
+      if (currentRecordCount >= 999) {
+        limitWarning.classList.remove('hidden');
+      } else {
+        limitWarning.classList.add('hidden');
+      }
+      
+      if (receipts.length === 0) {
+        emptyState.classList.remove('hidden');
+        // Remove all receipt cards
+        const cards = listContainer.querySelectorAll('[data-id]');
+        cards.forEach(card => card.remove());
+        return;
+      }
+      
+      emptyState.classList.add('hidden');
+      
+      // Get existing cards
+      const existingCards = new Map();
+      listContainer.querySelectorAll('[data-id]').forEach(card => {
+        existingCards.set(card.dataset.id, card);
+      });
+      
+      // Update or create cards
+      const receiptIds = new Set(receipts.map(r => r.__backendId));
+      
+      // Remove cards that no longer exist
+      existingCards.forEach((card, id) => {
+        if (!receiptIds.has(id)) {
+          card.remove();
+        }
+      });
+      
+      // Add new cards
+      receipts.forEach(receipt => {
+        if (!existingCards.has(receipt.__backendId)) {
+          const card = createReceiptCard(receipt);
+          listContainer.appendChild(card);
+        }
+      });
+    }
+
+    // Confirm delete with inline UI
+    function confirmDelete(id) {
+      const card = document.querySelector(`[data-id="${id}"]`);
+      const deleteBtn = card.querySelector('.delete-btn');
+      
+      deleteBtn.innerHTML = '✓ Yakin?';
+      deleteBtn.style.background = '#d63031';
+      deleteBtn.style.color = '#fff';
+      deleteBtn.onclick = () => deleteReceipt(id);
+      
+      setTimeout(() => {
+        if (deleteBtn) {
+          deleteBtn.innerHTML = '🗑️';
+          deleteBtn.style.background = '#ffe5e5';
+          deleteBtn.style.color = '#d63031';
+          deleteBtn.onclick = () => confirmDelete(id);
+        }
+      }, 3000);
+    }
+
+    // Delete receipt
+    async function deleteReceipt(id) {
+      const receipt = receipts.find(r => r.__backendId === id);
+      if (!receipt) return;
+      
+      const card = document.querySelector(`[data-id="${id}"]`);
+      if (card) {
+        card.style.opacity = '0.5';
+        card.style.pointerEvents = 'none';
+      }
+      
+      const result = await window.dataSdk.delete(receipt);
+      
+      if (!result.isOk) {
+        if (card) {
+          card.style.opacity = '1';
+          card.style.pointerEvents = 'auto';
+        }
+        showToast('Gagal menghapus kwitansi', 'error');
+      }
+    }
+
+    // Print receipt
+    function printReceipt(id) {
+      const receipt = receipts.find(r => r.__backendId === id);
+      if (!receipt) return;
+      
+      const companyName = config.company_name || defaultConfig.company_name;
+      const companyAddress = config.company_address || defaultConfig.company_address;
+      const signatureLocation = config.signature_location || defaultConfig.signature_location;
+      const signatureName = config.signature_name || defaultConfig.signature_name;
+      const signaturePhone = config.signature_phone || defaultConfig.signature_phone;
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Kwitansi No. ${String(receipt.no_seri).padStart(4, '0')}</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Times New Roman', serif; padding: 10px; max-width: 210mm; margin: 0 auto; background: #f5f5f0; }
+            .receipt { 
+              border: 2px solid #2c5f2d; 
+              padding: 12px 16px; 
+              width: 100%; 
+              display: block; 
+              margin-bottom: 10px; 
+              box-sizing: border-box;
+              background: linear-gradient(135deg, #fef8e7 0%, #fefcf3 50%, #fef8e7 100%);
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .header { 
+              text-align: center; 
+              border-bottom: 2px solid #2c5f2d; 
+              padding-bottom: 6px; 
+              margin-bottom: 8px;
+              background: linear-gradient(to bottom, #e8f5e9 0%, transparent 100%);
+              padding-top: 4px;
+            }
+            .header h1 { font-size: 16px; margin-bottom: 3px; font-weight: bold; color: #1b4332; }
+            .header p { font-size: 14px; color: #2c5f2d; }
+            .title { 
+              text-align: center; 
+              font-size: 20px; 
+              font-weight: bold; 
+              margin: 8px 0; 
+              text-decoration: underline; 
+              color: #1b4332;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            }
+            .no-seri { 
+              text-align: right; 
+              font-size: 13px; 
+              margin-bottom: 8px; 
+              color: #d32f2f; 
+              font-weight: bold;
+            }
+            .content { margin: 8px 0; }
+            .row { display: flex; margin: 5px 0; font-size: 14px; }
+            .label { width: 110px; font-weight: bold; color: #1b4332; }
+            .value { 
+              flex: 1; 
+              border-bottom: 1px dotted #2c5f2d; 
+              padding-left: 5px; 
+              font-size: 14px; 
+              color: #000;
+            }
+            .terbilang { 
+              background: linear-gradient(to right, #c8e6c9 0%, #e8f5e9 50%, #c8e6c9 100%); 
+              padding: 6px; 
+              margin: 8px 0; 
+              font-style: italic; 
+              text-align: center; 
+              font-size: 13px;
+              border: 1px dashed #2c5f2d;
+              color: #1b4332;
+              font-weight: 500;
+            }
+            .footer { display: flex; justify-content: flex-end; margin-top: 16px; font-size: 14px; }
+            .signature { text-align: center; width: 120px; }
+            .signature-line { 
+              border-bottom: 1px solid #1b4332; 
+              height: 40px; 
+              margin-bottom: 3px; 
+            }
+            .print-btn { 
+              position: fixed; 
+              top: 20px; 
+              right: 20px; 
+              padding: 12px 24px; 
+              background: #2c5f2d; 
+              color: white; 
+              border: none; 
+              border-radius: 8px; 
+              font-size: 16px; 
+              cursor: pointer; 
+              box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+              z-index: 1000;
+            }
+            .print-btn:hover { background: #1b4332; }
+            .print-btn:active { transform: scale(0.95); }
+            @media print {
+              .print-btn { display: none; }
+              @page { size: A4; margin: 10mm; }
+              body { background: white; }
+            }
+          </style>
+        </head>
+        <body>
+          <button class="print-btn" onclick="window.print(); return false;">🖨️ Cetak Kwitansi</button>
+          <div class="receipt">
+            <div class="header">
+              <h1>${companyName}</h1>
+              <p>${companyAddress}</p>
+            </div>
+            <div class="no-seri">No: ${String(receipt.no_seri).padStart(4, '0')}</div>
+            <div class="title">KWITANSI</div>
+            <div class="content">
+              <div class="row">
+                <span class="label">Telah diterima dari</span>
+                <span class="value">${receipt.diterima_dari}</span>
+              </div>
+              <div class="row">
+                <span class="label">Uang sejumlah</span>
+                <span class="value">${formatCurrency(receipt.uang_sejumlah)}</span>
+              </div>
+              <div class="terbilang"># ${receipt.terbilang} Rupiah #</div>
+              <div class="row">
+                <span class="label">Untuk pembayaran</span>
+                <span class="value">${receipt.untuk_pembayaran}</span>
+              </div>
+            </div>
+            <div style="text-align: right; margin-top: 8px; font-size: 13px;">
+              ${signatureLocation}, ${formatDate(receipt.tanggal)}
+            </div>
+            <div class="footer">
+              <div class="signature">
+                <div class="signature-line"></div>
+                <span style="font-size: 14px;">${signatureName}</span>
+                ${signaturePhone ? `<div style="font-size: 12px; color: #666; margin-top: 2px;">${signaturePhone}</div>` : ''}
+              </div>
+            </div>
+          </div>
+          <script>
+            // Pastikan tombol bekerja setelah halaman dimuat
+            window.onload = function() {
+              var btn = document.querySelector('.print-btn');
+              if (btn) {
+                btn.onclick = function(e) {
+                  e.preventDefault();
+                  window.print();
+                  return false;
+                };
+              }
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    // Print all receipts
+    function printAllReceipts() {
+      if (receipts.length === 0) return;
+      
+      const companyName = config.company_name || defaultConfig.company_name;
+      const companyAddress = config.company_address || defaultConfig.company_address;
+      const signatureLocation = config.signature_location || defaultConfig.signature_location;
+      const signatureName = config.signature_name || defaultConfig.signature_name;
+      const signaturePhone = config.signature_phone || defaultConfig.signature_phone;
+      
+      // Generate all receipts HTML
+      const receiptsHTML = receipts.map(receipt => `
+          <div class="receipt">
+            <div class="header">
+              <h1>${companyName}</h1>
+              <p>${companyAddress}</p>
+            </div>
+            <div class="no-seri">No: ${String(receipt.no_seri).padStart(4, '0')}</div>
+            <div class="title">KWITANSI</div>
+            <div class="content">
+              <div class="row">
+                <span class="label">Telah diterima dari</span>
+                <span class="value">${receipt.diterima_dari}</span>
+              </div>
+              <div class="row">
+                <span class="label">Uang sejumlah</span>
+                <span class="value">${formatCurrency(receipt.uang_sejumlah)}</span>
+              </div>
+              <div class="terbilang"># ${receipt.terbilang} Rupiah #</div>
+              <div class="row">
+                <span class="label">Untuk pembayaran</span>
+                <span class="value">${receipt.untuk_pembayaran}</span>
+              </div>
+            </div>
+            <div style="text-align: right; margin-top: 8px; font-size: 13px;">
+              ${signatureLocation}, ${formatDate(receipt.tanggal)}
+            </div>
+            <div class="footer">
+              <div class="signature">
+                <div class="signature-line"></div>
+                <span style="font-size: 14px;">${signatureName}</span>
+                ${signaturePhone ? `<div style="font-size: 12px; color: #666; margin-top: 2px;">${signaturePhone}</div>` : ''}
+              </div>
+            </div>
+          </div>
+      `).join('');
+      
+      const printWindow = window.open('', '_blank');
+      printWindow.document.write(`
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <title>Daftar Kwitansi (${receipts.length} kwitansi)</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: 'Times New Roman', serif; padding: 10px; max-width: 210mm; margin: 0 auto; background: #f5f5f0; }
+            .receipt { 
+              border: 2px solid #2c5f2d; 
+              padding: 12px 16px; 
+              width: 100%; 
+              display: block; 
+              margin-bottom: 10px; 
+              box-sizing: border-box;
+              background: linear-gradient(135deg, #fef8e7 0%, #fefcf3 50%, #fef8e7 100%);
+              box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            }
+            .header { 
+              text-align: center; 
+              border-bottom: 2px solid #2c5f2d; 
+              padding-bottom: 6px; 
+              margin-bottom: 8px;
+              background: linear-gradient(to bottom, #e8f5e9 0%, transparent 100%);
+              padding-top: 4px;
+            }
+            .header h1 { font-size: 16px; margin-bottom: 3px; font-weight: bold; color: #1b4332; }
+            .header p { font-size: 14px; color: #2c5f2d; }
+            .title { 
+              text-align: center; 
+              font-size: 20px; 
+              font-weight: bold; 
+              margin: 8px 0; 
+              text-decoration: underline; 
+              color: #1b4332;
+              text-transform: uppercase;
+              letter-spacing: 2px;
+            }
+            .no-seri { 
+              text-align: right; 
+              font-size: 13px; 
+              margin-bottom: 8px; 
+              color: #d32f2f; 
+              font-weight: bold;
+            }
+            .content { margin: 8px 0; }
+            .row { display: flex; margin: 5px 0; font-size: 14px; }
+            .label { width: 110px; font-weight: bold; color: #1b4332; }
+            .value { 
+              flex: 1; 
+              border-bottom: 1px dotted #2c5f2d; 
+              padding-left: 5px; 
+              font-size: 14px; 
+              color: #000;
+            }
+            .terbilang { 
+              background: linear-gradient(to right, #c8e6c9 0%, #e8f5e9 50%, #c8e6c9 100%); 
+              padding: 6px; 
+              margin: 8px 0; 
+              font-style: italic; 
+              text-align: center; 
+              font-size: 13px;
+              border: 1px dashed #2c5f2d;
+              color: #1b4332;
+              font-weight: 500;
+            }
+            .footer { display: flex; justify-content: flex-end; margin-top: 16px; font-size: 14px; }
+            .signature { text-align: center; width: 120px; }
+            .signature-line { 
+              border-bottom: 1px solid #1b4332; 
+              height: 40px; 
+              margin-bottom: 3px; 
+            }
+            .print-btn { 
+              position: fixed; 
+              top: 20px; 
+              right: 20px; 
+              padding: 12px 24px; 
+              background: #2c5f2d; 
+              color: white; 
+              border: none; 
+              border-radius: 8px; 
+              font-size: 16px; 
+              cursor: pointer; 
+              box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+              z-index: 1000;
+            }
+            .print-btn:hover { background: #1b4332; }
+            .print-btn:active { transform: scale(0.95); }
+            @media print {
+              .receipt { page-break-after: always; }
+              .receipt:last-child { page-break-after: auto; }
+              .print-btn { display: none; }
+              @page { size: A4; margin: 10mm; }
+              body { background: white; }
+            }
+          </style>
+        </head>
+        <body>
+          <button class="print-btn" id="printBtn">🖨️ Cetak Semua Kwitansi</button>
+          ${receiptsHTML}
+          <script>
+            window.onload = function() {
+              var btn = document.getElementById('printBtn');
+              if (btn) {
+                btn.onclick = function(e) {
+                  e.preventDefault();
+                  window.print();
+                  return false;
+                };
+              }
+            };
+          <\/script>
+        </body>
+        </html>
+      `);
+      printWindow.document.close();
+    }
+
+    // Show toast message
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = 'fixed bottom-4 right-4 px-6 py-3 rounded-lg shadow-lg transform transition-all z-50';
+      toast.style.cssText = type === 'error' 
+        ? 'background: #d63031; color: white;' 
+        : 'background: #00b894; color: white;';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+      }, 3000);
+    }
+
+    // Settings form submission
+    document.getElementById('settings-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      const newTitle = document.getElementById('settings-title').value.trim();
+      const newCompany = document.getElementById('settings-company').value.trim();
+      const newAddress = document.getElementById('settings-address').value.trim();
+      const newLocation = document.getElementById('settings-location').value.trim();
+      const newSignatureName = document.getElementById('settings-signature-name').value.trim();
+      const newSignaturePhone = document.getElementById('settings-signature-phone').value.trim();
+      
+      await window.elementSdk.setConfig({
+        kwitansi_title: newTitle || defaultConfig.kwitansi_title,
+        company_name: newCompany || defaultConfig.company_name,
+        company_address: newAddress || defaultConfig.company_address,
+        signature_location: newLocation || defaultConfig.signature_location,
+        signature_name: newSignatureName || defaultConfig.signature_name,
+        signature_phone: newSignaturePhone
+      });
+      
+      toggleSettings();
+      showToast('Pengaturan berhasil disimpan! ✨');
+    });
+
+    // Form submission
+    document.getElementById('receipt-form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (currentRecordCount >= 999) {
+        showToast('Batas maksimum 999 kwitansi tercapai', 'error');
+        return;
+      }
+      
+      const btnText = document.getElementById('btn-text');
+      const btnLoading = document.getElementById('btn-loading');
+      const submitBtn = document.getElementById('submit-btn');
+      
+      btnText.classList.add('hidden');
+      btnLoading.classList.remove('hidden');
+      submitBtn.disabled = true;
+      
+      const diterimaDari = document.getElementById('diterima-dari').value.trim();
+      const uangSejumlah = parseInt(document.getElementById('uang-sejumlah').value) || 0;
+      const untukPembayaran = document.getElementById('untuk-pembayaran').value.trim();
+      
+      const newReceipt = {
+        no_seri: getNextSerialNumber(),
+        diterima_dari: diterimaDari,
+        uang_sejumlah: uangSejumlah,
+        terbilang: terbilang(uangSejumlah).trim(),
+        untuk_pembayaran: untukPembayaran,
+        tanggal: new Date().toISOString()
+      };
+      
+      const result = await window.dataSdk.create(newReceipt);
+      
+      btnText.classList.remove('hidden');
+      btnLoading.classList.add('hidden');
+      submitBtn.disabled = false;
+      
+      if (result.isOk) {
+        document.getElementById('receipt-form').reset();
+        showToast('Kwitansi berhasil dibuat! ✨');
+      } else {
+        showToast('Gagal membuat kwitansi', 'error');
+      }
+    });
+
+    // Data handler for SDK
+    const dataHandler = {
+      onDataChanged(data) {
+        updateReceiptList(data);
+      }
+    };
+
+    // Config change handler
+    async function onConfigChange(newConfig) {
+      config = { ...defaultConfig, ...newConfig };
+      
+      // Update title
+      const titleText = document.getElementById('title-text');
+      if (titleText) {
+        titleText.textContent = config.kwitansi_title || defaultConfig.kwitansi_title;
+      }
+      
+      // Update company name display in all cards
+      const cards = document.querySelectorAll('[data-id]');
+      cards.forEach(card => {
+        const companyText = card.querySelector('p.text-sm');
+        if (companyText) {
+          companyText.textContent = config.company_name || defaultConfig.company_name;
+        }
+      });
+    }
+
+    // Element SDK initialization
+    window.elementSdk.init({
+      defaultConfig,
+      onConfigChange,
+      mapToCapabilities: (cfg) => ({
+        recolorables: [],
+        borderables: [],
+        fontEditable: undefined,
+        fontSizeable: undefined
+      }),
+      mapToEditPanelValues: (cfg) => new Map([
+        ['kwitansi_title', cfg.kwitansi_title || defaultConfig.kwitansi_title],
+        ['company_name', cfg.company_name || defaultConfig.company_name],
+        ['company_address', cfg.company_address || defaultConfig.company_address],
+        ['signature_location', cfg.signature_location || defaultConfig.signature_location],
+        ['signature_name', cfg.signature_name || defaultConfig.signature_name],
+        ['signature_phone', cfg.signature_phone || defaultConfig.signature_phone]
+      ])
+    });
+
+    // Initialize Data SDK
+    window.dataSdk.init(dataHandler);
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5de8df7340582b',t:'MTc2OTc0NDAyNS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
