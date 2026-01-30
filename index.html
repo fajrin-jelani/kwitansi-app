@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Kwitansi Pembayaran</title>
-  <script src="/_sdk/data_sdk.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&amp;family=Outfit:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
   <style>
@@ -85,10 +84,11 @@
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
   <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
  </head>
  <body class="h-full font-body">
-  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 50%, #cbd5e1 100%);"><!-- Main Container -->
+  <div id="app" class="h-full w-full overflow-auto" style="background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%);"><!-- Main Container -->
    <div class="max-w-6xl mx-auto p-4 sm:p-6 lg:p-8"><!-- Header -->
     <div class="text-center mb-8">
      <div class="flex items-center justify-center gap-4 mb-3">
@@ -96,7 +96,7 @@
       </div>
       <h1 id="main-title" class="font-heading text-4xl sm:text-5xl font-bold gradient-text"><span id="title-text">Kwitansi Pembayaran</span></h1><button onclick="toggleSettings()" class="p-3 rounded-2xl glass-effect transition-all hover:scale-110 hover:rotate-90" title="Pengaturan"> <span class="text-2xl">⚙️</span> </button>
      </div>
-     <p class="text-slate-700 text-base font-medium">Kelola kwitansi pembayaran dengan mudah dan modern ✨</p>
+     <p class="text-white text-base font-medium">Kelola kwitansi pembayaran dengan mudah dan modern ✨</p>
     </div><!-- Stats Dashboard -->
     <div id="stats-dashboard" class="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-8 no-print"><!-- Total Kwitansi -->
      <div class="stat-card glass-effect rounded-2xl p-6 card-hover" style="background: linear-gradient(135deg, rgba(99, 102, 241, 0.3) 0%, rgba(99, 102, 241, 0.1) 100%); border: 1px solid rgba(99, 102, 241, 0.3);">
@@ -133,46 +133,46 @@
       </div>
      </div>
     </div><!-- Settings Panel -->
-    <div id="settings-panel" class="hidden no-print rounded-3xl shadow-2xl p-6 mb-8 glass-effect animate-fade-in" style="background: rgba(255, 255, 255, 0.95);">
+    <div id="settings-panel" class="hidden no-print rounded-3xl shadow-2xl p-6 mb-8 glass-effect animate-fade-in">
      <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3"><span class="text-3xl">⚙️</span>
-       <h2 class="font-heading text-2xl font-semibold text-slate-800">Pengaturan</h2>
-      </div><button onclick="toggleSettings()" class="text-2xl text-slate-600 hover:text-slate-900 transition-all hover:rotate-90">✕</button>
+       <h2 class="font-heading text-2xl font-semibold text-white">Pengaturan</h2>
+      </div><button onclick="toggleSettings()" class="text-2xl text-slate-300 hover:text-white transition-all hover:rotate-90">✕</button>
      </div>
      <form id="settings-form" class="space-y-5">
-      <div><label for="settings-title" class="block text-sm font-semibold mb-2 text-slate-700">Judul Kwitansi</label> <input type="text" id="settings-title" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Kwitansi Pembayaran">
+      <div><label for="settings-title" class="block text-sm font-semibold mb-2 text-white">Judul Kwitansi</label> <input type="text" id="settings-title" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Kwitansi Pembayaran">
       </div>
-      <div><label for="settings-company" class="block text-sm font-semibold mb-2 text-slate-700">Nama Perusahaan / PT</label> <input type="text" id="settings-company" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="PT. MAJU BERSAMA">
+      <div><label for="settings-company" class="block text-sm font-semibold mb-2 text-white">Nama Perusahaan / PT</label> <input type="text" id="settings-company" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="PT. MAJU BERSAMA">
       </div>
-      <div><label for="settings-address" class="block text-sm font-semibold mb-2 text-slate-700">Alamat Perusahaan</label> <input type="text" id="settings-address" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Jl. Raya Utama No. 123, Jakarta">
+      <div><label for="settings-address" class="block text-sm font-semibold mb-2 text-white">Alamat Perusahaan</label> <input type="text" id="settings-address" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Jl. Raya Utama No. 123, Jakarta">
       </div>
-      <div class="pt-4 border-t-2" style="border-color: rgba(203, 213, 225, 0.4);">
+      <div class="pt-4 border-t-2" style="border-color: rgba(255,255,255,0.1);">
        <div class="flex items-center gap-2 mb-4"><span class="text-2xl">✍️</span>
-        <h3 class="font-semibold text-base text-slate-800">Tanda Tangan</h3>
+        <h3 class="font-semibold text-base text-white">Tanda Tangan</h3>
        </div>
        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-        <div><label for="settings-location" class="block text-sm font-semibold mb-2 text-slate-700">Tempat</label> <input type="text" id="settings-location" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Jakarta">
+        <div><label for="settings-location" class="block text-sm font-semibold mb-2 text-white">Tempat</label> <input type="text" id="settings-location" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Jakarta">
         </div>
-        <div><label for="settings-signature-name" class="block text-sm font-semibold mb-2 text-slate-700">Nama Penandatangan</label> <input type="text" id="settings-signature-name" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Penerima">
+        <div><label for="settings-signature-name" class="block text-sm font-semibold mb-2 text-white">Nama Penandatangan</label> <input type="text" id="settings-signature-name" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Penerima">
         </div>
        </div>
-       <div class="mt-4"><label for="settings-signature-phone" class="block text-sm font-semibold mb-2 text-slate-700">No. HP / Telepon</label> <input type="text" id="settings-signature-phone" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="081234567890">
+       <div class="mt-4"><label for="settings-signature-phone" class="block text-sm font-semibold mb-2 text-white">No. HP / Telepon</label> <input type="text" id="settings-signature-phone" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="081234567890">
        </div>
       </div><button type="submit" class="w-full py-4 px-6 rounded-xl font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] font-heading text-lg" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 8px 24px rgba(99,102,241,0.4);"> 💾 Simpan Pengaturan </button>
      </form>
     </div><!-- Form Input -->
-    <div class="no-print rounded-3xl shadow-2xl p-6 mb-8 glass-effect" style="background: rgba(255, 255, 255, 0.95);">
+    <div class="no-print rounded-3xl shadow-2xl p-6 mb-8 glass-effect">
      <div class="flex items-center gap-3 mb-6"><span class="text-3xl">✨</span>
-      <h2 class="font-heading text-2xl font-semibold text-slate-800">Buat Kwitansi Baru</h2>
+      <h2 class="font-heading text-2xl font-semibold text-white">Buat Kwitansi Baru</h2>
      </div>
      <form id="receipt-form" class="space-y-5">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-       <div><label for="diterima-dari" class="block text-sm font-semibold mb-2 text-slate-700">Telah Diterima Dari</label> <input type="text" id="diterima-dari" required class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Nama pembayar">
+       <div><label for="diterima-dari" class="block text-sm font-semibold mb-2 text-white">Telah Diterima Dari</label> <input type="text" id="diterima-dari" required class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Nama pembayar">
        </div>
-       <div><label for="uang-sejumlah" class="block text-sm font-semibold mb-2 text-slate-700">Uang Sejumlah (Rp)</label> <input type="number" id="uang-sejumlah" required min="0" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="0">
+       <div><label for="uang-sejumlah" class="block text-sm font-semibold mb-2 text-white">Uang Sejumlah (Rp)</label> <input type="number" id="uang-sejumlah" required min="0" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="0">
        </div>
       </div>
-      <div><label for="untuk-pembayaran" class="block text-sm font-semibold mb-2 text-slate-700">Untuk Pembayaran</label> <textarea id="untuk-pembayaran" required rows="2" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none resize-none font-body text-slate-800" style="border-color: rgba(203, 213, 225, 0.8); background: rgba(255, 255, 255, 0.9);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Keterangan pembayaran"></textarea>
+      <div><label for="untuk-pembayaran" class="block text-sm font-semibold mb-2 text-white">Untuk Pembayaran</label> <textarea id="untuk-pembayaran" required rows="2" class="w-full px-4 py-3 rounded-xl border-2 transition-all focus:outline-none resize-none font-body text-white" style="border-color: rgba(255,255,255,0.2); background: rgba(255,255,255,0.1);" onfocus="this.style.borderColor='#6366f1'; this.style.boxShadow='0 0 0 4px rgba(99,102,241,0.2)'" onblur="this.style.borderColor='rgba(255,255,255,0.2)'; this.style.boxShadow='none'" placeholder="Keterangan pembayaran"></textarea>
       </div><button type="submit" id="submit-btn" class="w-full py-4 px-6 rounded-xl font-semibold text-white transition-all transform hover:scale-[1.02] active:scale-[0.98] font-heading text-lg" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 8px 24px rgba(99,102,241,0.4);"> <span id="btn-text">✨ Buat Kwitansi</span> <span id="btn-loading" class="hidden">��� Menyimpan...</span> </button>
      </form>
      <div id="limit-warning" class="hidden mt-5 p-4 rounded-xl text-center glass-effect" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4);"><span class="text-red-300 font-medium">⚠️ Batas maksimum 999 kwitansi telah tercapai. Hapus beberapa kwitansi untuk membuat yang baru.</span>
@@ -181,26 +181,26 @@
     <div class="no-print">
      <div class="flex items-center justify-between mb-6">
       <div class="flex items-center gap-3"><span class="text-3xl">📚</span>
-       <h2 class="font-heading text-2xl font-semibold text-slate-800">Daftar Kwitansi</h2>
+       <h2 class="font-heading text-2xl font-semibold text-white">Daftar Kwitansi</h2>
       </div>
-      <div class="flex items-center gap-3"><button id="select-mode-btn" onclick="toggleSelectMode()" class="hidden px-4 py-2.5 rounded-xl font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 glass-effect text-slate-700" style="background: rgba(255, 255, 255, 0.9);"> <span>☑️ Pilih Kwitansi</span> </button> <button id="print-all-btn" onclick="printAllReceipts()" class="hidden px-4 py-2.5 rounded-xl font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 16px rgba(99,102,241,0.4);"> <span>🖨️ Cetak Semua</span> </button> <span id="receipt-count" class="text-sm px-4 py-2 rounded-xl font-medium glass-effect text-slate-700" style="background: rgba(255, 255, 255, 0.9);">0 kwitansi</span>
+      <div class="flex items-center gap-3"><button id="select-mode-btn" onclick="toggleSelectMode()" class="hidden px-4 py-2.5 rounded-xl font-medium transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2 glass-effect"> <span>☑️ Pilih Kwitansi</span> </button> <button id="print-all-btn" onclick="printAllReceipts()" class="hidden px-4 py-2.5 rounded-xl font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 16px rgba(99,102,241,0.4);"> <span>🖨️ Cetak Semua</span> </button> <span id="receipt-count" class="text-sm px-4 py-2 rounded-xl font-medium glass-effect text-white">0 kwitansi</span>
       </div>
      </div><!-- Selection Mode Actions -->
-     <div id="selection-actions" class="hidden mb-6 p-5 rounded-2xl glass-effect animate-fade-in" style="border: 2px solid rgba(99,102,241,0.5); background: rgba(255, 255, 255, 0.95);">
+     <div id="selection-actions" class="hidden mb-6 p-5 rounded-2xl glass-effect animate-fade-in" style="border: 2px solid rgba(99,102,241,0.5);">
       <div class="flex items-center justify-between flex-wrap gap-4">
-       <div class="flex items-center gap-3"><span class="font-medium text-slate-800 font-heading text-lg"> <span id="selected-count">0</span> kwitansi dipilih </span> <button onclick="selectAllReceipts()" class="px-4 py-2 text-sm rounded-lg transition-all hover:scale-105 text-slate-700 font-medium" style="background: rgba(203, 213, 225, 0.5);"> Pilih Semua </button> <button onclick="deselectAllReceipts()" class="px-4 py-2 text-sm rounded-lg transition-all hover:scale-105 text-slate-700 font-medium" style="background: rgba(203, 213, 225, 0.5);"> Batal Pilih </button>
+       <div class="flex items-center gap-3"><span class="font-medium text-white font-heading text-lg"> <span id="selected-count">0</span> kwitansi dipilih </span> <button onclick="selectAllReceipts()" class="px-4 py-2 text-sm rounded-lg transition-all hover:scale-105 glass-effect text-white font-medium"> Pilih Semua </button> <button onclick="deselectAllReceipts()" class="px-4 py-2 text-sm rounded-lg transition-all hover:scale-105 glass-effect text-white font-medium"> Batal Pilih </button>
        </div>
-       <div class="flex items-center gap-2"><button onclick="printSelectedReceipts()" id="print-selected-btn" class="px-5 py-2.5 rounded-xl font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 16px rgba(99,102,241,0.4);"> 🖨️ Cetak Terpilih </button> <button onclick="toggleSelectMode()" class="px-5 py-2.5 rounded-xl font-medium transition-all text-white" style="background: rgba(239, 68, 68, 0.8); border: 1px solid rgba(239, 68, 68, 0.5);"> ✕ Tutup </button>
+       <div class="flex items-center gap-2"><button onclick="printSelectedReceipts()" id="print-selected-btn" class="px-5 py-2.5 rounded-xl font-medium text-white transition-all transform hover:scale-105 active:scale-95 flex items-center gap-2" style="background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); box-shadow: 0 4px 16px rgba(99,102,241,0.4);"> 🖨️ Cetak Terpilih </button> <button onclick="toggleSelectMode()" class="px-5 py-2.5 rounded-xl font-medium transition-all text-white" style="background: rgba(239, 68, 68, 0.3); border: 1px solid rgba(239, 68, 68, 0.5);"> ✕ Tutup </button>
        </div>
       </div>
      </div>
      <div id="receipt-list" class="space-y-4">
-      <div id="empty-state" class="text-center py-16 rounded-3xl glass-effect" style="background: rgba(255, 255, 255, 0.95);">
+      <div id="empty-state" class="text-center py-16 rounded-3xl glass-effect">
        <div class="text-6xl mb-4">
         📭
        </div>
-       <p class="text-slate-800 text-lg font-bold">Belum ada kwitansi</p>
-       <p class="text-slate-600 text-sm mt-2">Buat kwitansi pertama Anda sekarang! ✨</p>
+       <p class="text-white text-lg font-bold">Belum ada kwitansi</p>
+       <p class="text-white text-sm mt-2">Buat kwitansi pertama Anda sekarang! ✨</p>
       </div>
      </div>
     </div><!-- Print Preview (Hidden by default) -->
@@ -252,33 +252,6 @@
     let currentRecordCount = 0;
     let isSelectMode = false;
 
-    // Data handler for SDK
-    const dataHandler = {
-      onDataChanged(data) {
-        receipts = [...data].sort((a, b) => b.no_seri - a.no_seri);
-        currentRecordCount = receipts.length;
-        updateReceiptList(receipts);
-      }
-    };
-
-    // Initialize SDK
-    async function initializeApp() {
-      if (window.dataSdk) {
-        const initResult = await window.dataSdk.init(dataHandler);
-        if (!initResult.isOk) {
-          console.error('Failed to initialize data SDK');
-          showToast('Gagal menginisialisasi sistem penyimpanan', 'error');
-        }
-      }
-    }
-
-    // Call initialize when DOM is ready
-    if (document.readyState === 'loading') {
-      document.addEventListener('DOMContentLoaded', initializeApp);
-    } else {
-      initializeApp();
-    }
-
     // Toggle select mode
     function toggleSelectMode() {
       isSelectMode = !isSelectMode;
@@ -305,8 +278,8 @@
         });
         actionButtons.forEach(ab => ab.classList.remove('hidden'));
         selectionActions.classList.add('hidden');
-        selectModeBtn.style.background = 'rgba(255,255,255,0.9)';
-        selectModeBtn.style.color = '#334155';
+        selectModeBtn.style.background = 'rgba(255,255,255,0.1)';
+        selectModeBtn.style.color = '#fff';
         selectModeBtn.querySelector('span').textContent = '☑️ Pilih Kwitansi';
         printAllBtn.classList.remove('hidden');
         updateSelectedCount();
@@ -579,7 +552,6 @@
       const card = document.createElement('div');
       card.className = 'rounded-3xl shadow-2xl overflow-hidden glass-effect card-hover animate-fade-in';
       card.dataset.id = receipt.__backendId;
-      card.style.background = 'rgba(255, 255, 255, 0.95)';
       
       card.innerHTML = `
         <div class="p-6">
@@ -593,16 +565,16 @@
               <div>
                 <div class="flex items-center gap-3 mb-2">
                   <span class="text-3xl font-heading font-bold gradient-text">No. ${String(receipt.no_seri).padStart(4, '0')}</span>
-                  <span class="px-3 py-1.5 text-xs rounded-xl font-medium text-slate-700" style="background: rgba(203, 213, 225, 0.5);">${formatDate(receipt.tanggal)}</span>
+                  <span class="px-3 py-1.5 text-xs rounded-xl font-medium glass-effect text-white">${formatDate(receipt.tanggal)}</span>
                 </div>
-                <p class="text-sm text-slate-600 font-medium">${config.company_name || defaultConfig.company_name}</p>
+                <p class="text-sm text-slate-300 font-medium">${config.company_name || defaultConfig.company_name}</p>
               </div>
             </div>
             <div class="flex gap-2 action-buttons">
-              <button onclick="printReceipt('${receipt.__backendId}')" class="p-3 rounded-xl transition-all hover:scale-110" style="background: rgba(99, 102, 241, 0.15); border: 1px solid rgba(99, 102, 241, 0.3);" title="Cetak">
+              <button onclick="printReceipt('${receipt.__backendId}')" class="p-3 rounded-xl transition-all hover:scale-110 glass-effect" title="Cetak">
                 <span class="text-xl">🖨️</span>
               </button>
-              <button onclick="confirmDelete('${receipt.__backendId}')" class="delete-btn p-3 rounded-xl transition-all hover:scale-110" style="background: rgba(239, 68, 68, 0.15); border: 1px solid rgba(239, 68, 68, 0.3);" title="Hapus">
+              <button onclick="confirmDelete('${receipt.__backendId}')" class="delete-btn p-3 rounded-xl transition-all hover:scale-110" style="background: rgba(239, 68, 68, 0.2); border: 1px solid rgba(239, 68, 68, 0.4);" title="Hapus">
                 <span class="text-xl">🗑️</span>
               </button>
             </div>
@@ -610,20 +582,20 @@
           
           <div class="space-y-3 text-sm">
             <div class="flex items-start">
-              <span class="w-36 font-semibold text-slate-700">Diterima dari</span>
-              <span class="flex-1 font-semibold text-slate-800">: ${receipt.diterima_dari}</span>
+              <span class="w-36 font-semibold text-white">Diterima dari</span>
+              <span class="flex-1 font-semibold text-white">: ${receipt.diterima_dari}</span>
             </div>
             <div class="flex items-start">
-              <span class="w-36 font-semibold text-slate-700">Uang sejumlah</span>
+              <span class="w-36 font-semibold text-white">Uang sejumlah</span>
               <span class="flex-1 font-bold gradient-text text-lg">: ${formatCurrency(receipt.uang_sejumlah)}</span>
             </div>
             <div class="flex items-start">
-              <span class="w-36 font-semibold text-slate-700">Terbilang</span>
-              <span class="flex-1 italic text-slate-700">: ${receipt.terbilang} Rupiah</span>
+              <span class="w-36 font-semibold text-white">Terbilang</span>
+              <span class="flex-1 italic text-white">: ${receipt.terbilang} Rupiah</span>
             </div>
             <div class="flex items-start">
-              <span class="w-36 font-semibold text-slate-700">Pembayaran</span>
-              <span class="flex-1 text-slate-700">: ${receipt.untuk_pembayaran}</span>
+              <span class="w-36 font-semibold text-white">Pembayaran</span>
+              <span class="flex-1 text-white">: ${receipt.untuk_pembayaran}</span>
             </div>
           </div>
         </div>
@@ -1151,12 +1123,7 @@
         tanggal: new Date().toISOString()
       };
       
-      let result;
-      if (window.dataSdk) {
-        result = await window.dataSdk.create(newReceipt);
-      } else {
-        result = { isOk: false };
-      }
+      const result = await createReceipt(newReceipt);
       
       btnText.classList.remove('hidden');
       btnLoading.classList.add('hidden');
@@ -1170,6 +1137,51 @@
       }
     });
 
+    // Local storage functions for receipts
+    function loadReceipts() {
+      try {
+        const saved = localStorage.getItem('kwitansi_receipts');
+        if (saved) {
+          const parsed = JSON.parse(saved);
+          return parsed.map(r => ({
+            ...r,
+            __backendId: r.__backendId || r.no_seri.toString()
+          }));
+        }
+      } catch (e) {
+        console.error('Error loading receipts:', e);
+      }
+      return [];
+    }
+
+    function saveReceipts(receiptsToSave) {
+      try {
+        localStorage.setItem('kwitansi_receipts', JSON.stringify(receiptsToSave));
+      } catch (e) {
+        console.error('Error saving receipts:', e);
+      }
+    }
+
+    // Create receipt
+    async function createReceipt(receiptData) {
+      const newReceipt = {
+        ...receiptData,
+        __backendId: Date.now().toString()
+      };
+      receipts.push(newReceipt);
+      saveReceipts(receipts);
+      updateReceiptList(receipts);
+      return { isOk: true };
+    }
+
+    // Delete receipt
+    async function deleteReceiptLocal(id) {
+      receipts = receipts.filter(r => r.__backendId !== id);
+      saveReceipts(receipts);
+      updateReceiptList(receipts);
+      return { isOk: true };
+    }
+
     // Update delete receipt function
     async function deleteReceipt(id) {
       const receipt = receipts.find(r => r.__backendId === id);
@@ -1181,12 +1193,7 @@
         card.style.pointerEvents = 'none';
       }
       
-      let result;
-      if (window.dataSdk) {
-        result = await window.dataSdk.delete(receipt);
-      } else {
-        result = { isOk: false };
-      }
+      const result = await deleteReceiptLocal(id);
       
       if (!result.isOk) {
         if (card) {
@@ -1227,6 +1234,10 @@
       if (titleText) {
         titleText.textContent = config.kwitansi_title || defaultConfig.kwitansi_title;
       }
+      
+      // Load receipts from localStorage
+      receipts = loadReceipts();
+      updateReceiptList(receipts);
     }
     
     // Call initialize on page load
@@ -1234,5 +1245,5 @@
       initializeDisplay();
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5e6bf011ab2c28',t:'MTc2OTc0OTM5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9c5e6befd5b1d8ca',t:'MTc2OTc0OTM5NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
